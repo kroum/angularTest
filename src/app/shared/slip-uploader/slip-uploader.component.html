@@ -1,0 +1,44 @@
+<app-docs-uploader
+  (onTableData)="setTable($event)"
+></app-docs-uploader>
+
+<cdk-virtual-scroll-viewport itemSize="50">
+  <table>
+    <thead>
+      <th>№</th>
+      <th>Police number</th>
+      <th>Branch</th>
+      <th>Category</th>
+      <th>Nature of risk / Activity</th>
+      <th>Effective Date ^</th>
+      <th>Date deadline ^</th>
+      <th>Transaction date / seized ^</th>
+      <th>Subscriber</th>
+      <th>insured</th>
+      <th>Location / Regis. Veh.</th>
+      <th>Sum insured ~</th>
+      <th>Prime HT ~</th>
+      <th>Commission paid ~</th>
+      <th>Part ASSIGNOR CoInS (%)</th>
+    </thead>
+    <tbody>
+    <tr *cdkVirtualFor="let item of tableData">
+      <td>{{item.idx}}</td>
+      <td>{{item.policeNumber}}</td>
+      <td>{{item.branch}}</td>
+      <td>{{item.category}}</td>
+      <td>{{item.activity}}</td>
+      <td>{{item.dateEffective}}</td>
+      <td>{{item.dateDeadline}}</td>
+      <td>{{item.dateTransaction}}</td>
+      <td>{{item.subscriber}}</td>
+      <td>{{item.insured}}</td>
+      <td>{{item.location}}</td>
+      <td>{{item.sumInsured}}</td>
+      <td>{{item.primeHt}}</td>
+      <td>{{item.commissionPaid}}</td>
+      <td>{{item.partAssignor}}</td>
+    </tr>
+    </tbody>
+  </table>
+</cdk-virtual-scroll-viewport>

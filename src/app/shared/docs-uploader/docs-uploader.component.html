@@ -1,0 +1,14 @@
+<div>
+  <input type="file" #fileInput name="{{name}}" [disabled]="disabled"
+         accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+
+  <label>
+    <select (change)="selectDocType($event)">
+      <option value="">Select the document type</option>
+      <option value="1">Life Premium</option>
+      <option value="2">Life Claim</option>
+      <option value="3">Not Life Premium</option>
+      <option value="4">Not Life Claim</option>
+    </select>
+  </label>
+</div>
