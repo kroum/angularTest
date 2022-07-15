@@ -1,0 +1,29 @@
+.loader-wrapper {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  padding: 2rem 0;
+
+  .file-item {
+    width: 40%;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ccc;
+    border-radius: .25rem;
+    border: 1px solid #ccc;
+    text-align: center;
+    margin-right: 1rem;
+
+    input {
+      visibility: hidden;
+      display: none;
+    }
+
+    &.disabled {
+      background: #eee;
+      color: #aaa;
+    }
+  }
+}

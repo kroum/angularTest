@@ -1,4 +1,5 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
 
 @Component({
   selector: 'app-slip-uploader',
@@ -6,6 +7,10 @@ import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
   styleUrls: ['./slip-uploader.component.scss']
 })
 export class SlipUploaderComponent implements OnInit, OnChanges {
+  @ViewChild('scrollViewport', { static: true})
+  public virtualScrollViewport: CdkVirtualScrollViewport | undefined;
+
+
   tableData: Array<any> = [];
 
   constructor() {
@@ -21,5 +26,6 @@ export class SlipUploaderComponent implements OnInit, OnChanges {
   setTable($event: any | Array<any>): void {
     console.log($event);
     this.tableData = $event;
+    setTimeout(() => this.virtualScrollViewport?.scrollToIndex(35), 150);
   }
 }

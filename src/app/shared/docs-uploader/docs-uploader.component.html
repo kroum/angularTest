@@ -1,6 +1,10 @@
-<div>
-  <input type="file" #fileInput name="{{name}}" [disabled]="disabled"
-         accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+<div class="loader-wrapper">
+  <label class="file-item" [ngClass]="{'disabled': disabled}">
+    <input type="file" #fileInput name="{{name}}" [disabled]="disabled"
+           accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+    <span>{{labelText}}</span>
+  </label>
+
 
   <label>
     <select (change)="selectDocType($event)">

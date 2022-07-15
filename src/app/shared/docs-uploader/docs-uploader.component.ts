@@ -16,6 +16,12 @@ import {SLIPS_ALLOWED, SlipUploadValidator} from "../helpers/validators/slip-upl
 import * as XLSX from 'xlsx';
 import {tableDataType, TableMapper} from "./table-mapper";
 
+const copies = {
+  empty: 'Please select the slip type',
+  notImplemented: 'There\'s no processing for the document type yet',
+  load: 'Click for loading of a document'
+};
+
 export const CUSTOM_FILE_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DocsUploaderComponent),
@@ -33,7 +39,6 @@ export class DocsUploaderComponent implements ControlValueAccessor, OnInit, OnCh
 
   @Input() name: string;
   @Input() error: string;
-  @Input() emptyString: string;
   @Input() formItem: FormControl = new FormControl();
   @Input() disabled: boolean;
   @Input() valid: boolean;
@@ -45,6 +50,9 @@ export class DocsUploaderComponent implements ControlValueAccessor, OnInit, OnCh
 
   isInvalid = false;
   isEmpty = true;
+  labelText: string;
+
+
 
   @HostListener('change', ['$event.target']) emitFiles( event: any ): void {
     let file = event && event.files && event.files.item(0);
@@ -68,6 +76,7 @@ export class DocsUploaderComponent implements ControlValueAccessor, OnInit, OnCh
           const worksheet = workbook.Sheets[firstSheetName];
 
           const results = XLSX.utils.sheet_to_json(worksheet,{ raw: true, defval: '' });
+          this.labelText = file.name;
           this.onTableData.emit(TableMapper.mapParsedData(tableDataType.notLifePremium, results));
         };
 
@@ -79,7 +88,7 @@ export class DocsUploaderComponent implements ControlValueAccessor, OnInit, OnCh
         file = null;
         fileLoaded = true;
         this.isInvalid = true;
-        this.error = 'You can only upload .png, or .jpeg images';
+        this.error = 'You can only upload .xlsx, or .xls images';
         return;
       }
     }
@@ -94,9 +103,9 @@ export class DocsUploaderComponent implements ControlValueAccessor, OnInit, OnCh
   ) {
     this.name = '';
     this.error = '';
-    this.emptyString = '';
     this.disabled = true;
     this.valid = true;
+    this.labelText = copies.empty;
     this.onChange = () => {};
   }
 
@@ -119,11 +128,22 @@ export class DocsUploaderComponent implements ControlValueAccessor, OnInit, OnCh
   ngOnChanges(changes: SimpleChanges): void {}
 
   selectDocType($event: any): void {
-    if (+$event.target.value === 3) {
-      this.disabled = false;
-      setTimeout(() => this.fileInput?.nativeElement.click(), 20);
-    } else {
-      this.disabled = true;
+    switch (+$event.target.value) {
+      case 0:
+        this.disabled = true;
+        this.labelText = copies.empty;
+        this.onTableData.emit([]);
+        break;
+      case tableDataType.notLifePremium:
+        this.disabled = false;
+        this.labelText = copies.load;
+        setTimeout(() => this.fileInput?.nativeElement.click(), 20);
+        break;
+      default:
+        this.disabled = true;
+        this.labelText = copies.notImplemented;
+        this.onTableData.emit([]);
+        break;
     }
   }
 }

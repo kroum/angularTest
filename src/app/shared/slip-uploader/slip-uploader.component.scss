@@ -1,3 +1,22 @@
 cdk-virtual-scroll-viewport {
   height: 500px;
 }
+
+.date-select {
+  margin-bottom: 1rem;
+  
+  span {
+    font-weight: bold;
+  }
+
+  select {
+    border: 0 none;
+    border-bottom: 1px solid #454545;
+    width: 8em;
+    margin-left: 0.5rem;
+
+    &:active, &:focus {
+      outline: 0 none;
+    }
+  }
+}
